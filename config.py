@@ -1,4 +1,5 @@
 config = {
-	'dbUser': '',
-	'dbPassword': ''
+	'dbUser': 'root',
+	'dbPassword': '0243',
+	'appSecret': "b'\xa9\x11\xd6E@\x94 \xd8\xc73)\t\x9c\xbd\x93n=\x87\x1f\xba\xa7\x0bg\xd7'"
 }

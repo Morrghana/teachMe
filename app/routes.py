@@ -2,7 +2,7 @@ from flask import Flask, render_template, json, request, redirect, url_for
 from __main__ import teachMeApp
 import pymysql
 from pprint import pprint
-from app.DB_connect import DB_connect
+from app.lib.dbc import dbc
 
 @teachMeApp.route("/")
 def main():
@@ -21,7 +21,7 @@ def signUp():
     _password = request.form['password']
 
     if _name and _email and _password:
-        db = DB_connect()
+        db = dbc()
 
         selectQuery = "SELECT username, email FROM users WHERE username='{0}' OR email='{1}'".format(_name, _email)
         result = dict(db.resultTuple(selectQuery))
@@ -47,7 +47,7 @@ def login():
     password = request.form['password']
 
     if email and password:
-        db = DB_connect()
+        db = dbc()
         query = "SELECT count(*) FROM users WHERE email = '{0}' AND password = '{1}'".format(email, password)
         result = db.resultSingle(query)
 
