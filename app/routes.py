@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json, request, redirect, url_for
+from flask import Flask, render_template, json, request, redirect, url_for, session
 from __main__ import teachMeApp
 import pymysql
 from pprint import pprint
@@ -30,8 +30,10 @@ def signUp():
         if usersCount == 0:
             query = "INSERT INTO users (username, email, password) VALUES('{0}', '{1}', '{2}')".format(_name, _email, _password)
             db.execute(query)
+            session['email'] = _email
+            return redirect(url_for("courses"))
 
-        return render_template("signup.html")
+    return render_template("signup.html")
         # return json.dumps({'html':pprint(result)})
     # return json.dumps({'html':resLen})
 
@@ -53,6 +55,7 @@ def login():
 
         if result[0] == 1:
             # return redirect(request.args.get("courses"))
+            session['email'] = email
             return redirect(url_for("courses"))
         else:
             return render_template("login.html")
@@ -63,4 +66,7 @@ def login():
 
 @teachMeApp.route("/courses")
 def courses():
-    return render_template("courses.html")
+    if "email" in session:
+        return render_template("courses.html")
+
+    return redirect(url_for('login'))
