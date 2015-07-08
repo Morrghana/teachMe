@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+  <script type="text/javascript">
+//     $(function() {
+//     $('#btnLogin').click(function() {
+
+//         $.ajax({
+//             url: '/login',
+//             data: $('form').serialize(),
+//             type: 'POST',
+//             success: function(response) {
+//                 console.log(response);
+//             },
+//             error: function(error) {
+//                 console.log(error);
+//             }
+//         });
+//     });
+// });
+  </script>
+  <form class="form-login" method="POST" action="/login">
+
+    <label for="email">Email address</label>
+    <input type="email" name="email" id="email" required>
+
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required>
+
+    <button id="btnLogin" type="submit">Login</button>
+  </form>
+{% endblock %}
