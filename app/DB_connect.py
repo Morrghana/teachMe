@@ -1,8 +1,9 @@
 import pymysql
+from config import config
 
 class DB_connect():
 
-    def __init__(self, dbHost='localhost', dbName='teach_me', username='root', password='0243'):
+    def __init__(self, dbHost='localhost', dbName='teach_me', username=config['dbUser'], password=config['dbPassword']):
         self._conn = pymysql.connect(host=dbHost, port=3306, user=username, passwd=password, db=dbName)
         self._cursor = self._conn.cursor()
 

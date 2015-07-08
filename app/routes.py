@@ -8,18 +8,18 @@ from app.DB_connect import DB_connect
 def main():
     return render_template("home.html")
 
-  
-@teachMeApp.route("/showSignUp")
+
+@teachMeApp.route("/signUp")
 def showSignUp():
     return render_template("signup.html")
 
-    
+
 @teachMeApp.route("/signUp", methods=['POST'])
 def signUp():
     _name = request.form['name']
     _email = request.form['email']
     _password = request.form['password']
-    
+
     if _name and _email and _password:
         db = DB_connect()
 
@@ -32,11 +32,11 @@ def signUp():
             db.execute(query)
 
         return render_template("signup.html")
-        # return json.dumps({'html':pprint(result)})  
+        # return json.dumps({'html':pprint(result)})
     # return json.dumps({'html':resLen})
 
 
-@teachMeApp.route("/showLogin")
+@teachMeApp.route("/login")
 def showLogin():
     return render_template("login.html")
 
@@ -57,7 +57,7 @@ def login():
         else:
             return render_template("login.html")
     else:
-        return render_template("login.html")    
+        return render_template("login.html")
     # return json.dumps({'html':pprint(result[0])})
 
 
