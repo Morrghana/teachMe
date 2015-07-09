@@ -33,8 +33,8 @@ def signUp():
             db.execute(query)
             session['email'] = _email
             return redirect(url_for("courses"))
-
-    return render_template("signup.html")
+    else:
+        return render_template("signup.html")
         # return json.dumps({'html':pprint(result)})
     # return json.dumps({'html':resLen})
 
@@ -83,7 +83,7 @@ def startCreateCourses():
     courseType = request.form['type']
 
     db = dbc()
-    query = "INSERT INTO courses (author_id, title, type) VALUES ({0}, '{1}', '{2}')".format(session['userId'], name, courseType)
+    query = "INSERT INTO courses (author_id, title, type, date) VALUES ({0}, '{1}', '{2}', NOW())".format(session['userId'], name, courseType)
     db.execute(query)
     id = db.getLastId()
 
@@ -118,12 +118,15 @@ def createCourse():
         db.execute(query)
         question_id = db.getLastId()
 
-        for i in range(1, len(question_data)):
-            answQuery = "INSERT INTO answers (question_id, answer) VALUES({0}, '{1}')"
-            answQuery = answQuery.format(question_id, question_data[i])
+        answer = request.form.getlist('answers[{0}]'.format(i))
+        for j in range(1, len(question_data)):
+            isCorrect = 0
+            if int(answer[0]) == j:
+                isCorrect = 1
+            answQuery = "INSERT INTO answers (question_id, answer, correct) VALUES({0}, '{1}', {2})"
+            answQuery = answQuery.format(question_id, question_data[j], isCorrect)
             db.execute(answQuery)
 
-    # return json.dumps({'html':data})
     return render_template("courses.html")
 
 

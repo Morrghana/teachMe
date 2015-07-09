@@ -10,8 +10,9 @@
     	<input type="text" name={%print('questions[{0}]'.format(i+1))%} id={%print(i+1)%} >
 
     	{% for j in range(2): %}
-    		Answer {%print(i+j+1)%}
+    		Answer {%print(j+1)%}
     		<input type="text" name={%print('questions[{0}]'.format(i + 1))%} id={%print('q{0}a{1}'.format(i+1,j+1))%}>
+        <input type='radio' name={%print('answers[{0}]'.format(i+1))%} value={%print(j+1)%}>
     	{% endfor %}
     	<br>
     {% endfor %}
