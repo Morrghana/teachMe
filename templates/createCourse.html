@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+<br>
+{%print name %}
+
+  <form class="form-create" method="POST" action="/createCourse">
+
+  	{% for i in range(count): %}
+	    Question {% print(i+1) %}
+    	<input type="text" name={%print('q{0}'.format(i+1))%} id={%print(i+1)%} >
+
+    	{% for j in range(2): %}
+    		Answer {%print(i+j+1)%}
+    		<input type="text" name={%print('q{0}a{1}'.format(i,j+1))%} id={%print('q{0}a{1}'.format(i,j+1))%}>
+    	{% endfor %}
+    	<br>
+    {% endfor %}
+
+    <button id="btnCreateCourse" type="submit">Create</button>
+  </form>
+{% endblock %}

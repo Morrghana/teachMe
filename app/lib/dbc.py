@@ -16,7 +16,7 @@ class dbc():
     def resultDict(self, query):
         self._cursor = self._conn.cursor(pymysql.cursors.DictCursor)
         self._cursor.execute(query)
-        return self._cursor.fetchall
+        return self._cursor.fetchall()
 
 
     def resultSingle(self, query):
@@ -26,6 +26,10 @@ class dbc():
     def execute(self, query):
         self._cursor.execute(query)
         self._conn.commit()
+
+
+    def getLastId(self):
+        return self._conn.insert_id()
 
 
     def __del__(self):
