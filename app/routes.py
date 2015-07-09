@@ -92,7 +92,7 @@ def startCreateCourses():
         # return redirect(url_for('/createCourse?name=' + name + '&count=' + count + '&type=' + courseType))
 
     return render_template("courses.html")
-        
+
 
 @teachMeApp.route("/createCourse", methods=['GET'])
 def openCreateCourseForm():
@@ -100,16 +100,30 @@ def openCreateCourseForm():
     name = request.args.get('name')
     id = request.args.get('id')
 
-    return render_template("createCourse.html", name=name,count=count, id=id)
+    return render_template("createCourse.html", name=name, count=count, id=id)
 
 
 @teachMeApp.route("/createCourse", methods=['POST'])
 def createCourse():
     data = dict(request.form)
+    db = dbc()
+    course_id = int(request.args.get('courseId'))
+    count = int(request.args.get('count'))
 
+    for i in range(1, count + 1):
+        key = 'questions[{0}]'.format(i)
+        question_data = request.form.getlist(key)
+        query = "INSERT INTO questions (course_id, question) VALUES ({0}, '{1}')"
+        query = query.format(course_id, question_data[0])
+        db.execute(query)
+        question_id = db.getLastId()
 
-    return json.dumps({'html':print(data)})
-    # return json.dumps({'html':print(request.values)})
+        for i in range(1, len(question_data)):
+            answQuery = "INSERT INTO answers (question_id, answer) VALUES({0}, '{1}')"
+            answQuery = answQuery.format(question_id, question_data[i])
+            db.execute(answQuery)
+
+    # return json.dumps({'html':data})
     return render_template("courses.html")
 
 
