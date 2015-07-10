@@ -34,7 +34,6 @@ def signUp():
     else:
         return render_template("signup.html")
 
-
 @teachMeApp.route("/login")
 def showLogin():
     return render_template("login.html")

@@ -1,15 +1,26 @@
 {% extends "layout.html" %}
 {% block content %}
-  <form class="form-signin" method="POST" action="/signUp">
-    <label for="name" class="sr-only">Name</label>
-    <input type="name" name="name" id="name" required>
+<div class="col-xs-4 col-md-offset-4">
+  <h4>Log In</h4>
+    <div class="well">
+        <form id="signUpForm" method="POST" action="/signUp">
+            <div class="form-group">
+                <label for="name" class="control-label">Name</label>
+                <input type="name" class="form-control" id="name" name="name" required title="Please enter your name">
+            </div>
+            <div class="form-group">
+                <label for="email" class="control-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required title="Please enter your email">
+            </div>
+            <div class="form-group">
+                <label for="password" class="control-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required title="Please enter your password">
+            </div>
 
-    <label for="email">Email address</label>
-    <input type="email" name="email" id="email" required>
-
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-                                                              
-    <button id="btnSignUp" type="submit">Sign up</button>
-  </form>
+            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+            <br>
+            <a href="/login">Log In</a>
+        </form>
+    </div>
+</div>
 {% endblock %}
