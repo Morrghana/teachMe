@@ -11,9 +11,11 @@ class CourseModel():
         courseRepo=CourseRepository()
         result=courseRepo.getNewestCourse()
         newest=''
+        title=''
         if result:
+            title=result['title']
             newest = "/takeCourse?id={0}&title={1}".format(result['course_id'], result['title'])
-        data={'url':newest, 'title':result['title']}
+        data={'url':newest, 'title':title}
         return data
 
 

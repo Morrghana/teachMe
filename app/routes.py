@@ -63,7 +63,7 @@ def courses():
     if "email" in session:
         model=CourseModel()
         result=model.getNewestCourse()
-        
+            
         return render_template("courses.html", newUrl=result["url"], newTitle=result['title'])
 
     return redirect(url_for('login'))
