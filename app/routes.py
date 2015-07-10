@@ -131,5 +131,5 @@ def viewProfile():
     userData=model.getUserData(userId=id)
     courses=model.getUserCourses(userId=id)
 
-    return render_template("profile.html", userData=userData, courses=courses)
+    return render_template("profile.html", userData=userData[0], courses=courses)
 

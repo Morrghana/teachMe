@@ -21,8 +21,8 @@
   </form>
 
   <br><br><br>
-  {% if url and newTitle:%}
+  {% if newUrl and newTitle:%}
     Newest:<br>
-    <a href={%print(url)%}>{% print(newTitle) %}</a>
+    <a href={%print(newUrl)%}>{% print(newTitle) %}</a>
   {% endif%}
   {% endblock %}
