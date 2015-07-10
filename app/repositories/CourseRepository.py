@@ -80,5 +80,10 @@ class CourseRepository():
         return courses
 
 
+    def getCourseTypes(self):
+        db=dbc()
+        query="SELECT type FROM course_types"
+        types=db.resultDict(query)
+        return types
 
 

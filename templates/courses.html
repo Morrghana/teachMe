@@ -11,7 +11,11 @@
     <input type="number" name="questions" id="questions" required>
 
 	<label for="type">Course type:</label>
-    <input type="text" name="type" id="type" required>
+    <select name='type'>
+      {% for type in types: %}
+        <option value={%print(type['type'])%}> {%print(type['type'])%} </option>
+      {% endfor %}
+    </select>
 
     <button id="btnCreate" type="submit">Start</button>
   </form>

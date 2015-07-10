@@ -77,3 +77,9 @@ class CourseModel():
         courseRepo=CourseRepository()
         userCourses=courseRepo.getUserCourses(userId=userId)
         return userCourses
+
+
+    def getCourseTypes(self):
+        courseRepo=CourseRepository()
+        types=courseRepo.getCourseTypes()
+        return types
