@@ -23,6 +23,13 @@ class CourseRepository():
         return id
 
 
+    def insertDescription(self, courseId, description):
+        db=dbc()
+        print(description)
+        query="UPDATE courses SET description='{0}' WHERE course_id='{1}'".format(description, courseId)
+        db.execute(query)
+
+
     def insertQuestion(self, courseId, question):
         db=dbc()
         query = "INSERT INTO questions (course_id, question) VALUES ({0}, '{1}')"

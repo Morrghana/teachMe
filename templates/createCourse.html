@@ -4,7 +4,7 @@
 {%print name %}
 
   <form class="form-create" method="POST" action=/createCourse?courseId={%print(id)%}&count={%print(count)%}>
-
+    <textarea cols="50" rows="20" name="description"></textarea>
   	{% for i in range(count): %}
 	    Question {% print(i+1) %}
     	<input type="text" name={%print('questions[{0}]'.format(i+1))%} id={%print(i+1)%} >

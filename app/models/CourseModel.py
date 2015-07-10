@@ -25,12 +25,14 @@ class CourseModel():
 
     def createCourse(self, courseId, count):
         courseRepo=CourseRepository()
+        description=request.form['description']
+        courseRepo.insertDescription(courseId=courseId, description=description)
         for i in range(1, count + 1):
             key = 'questions[{0}]'.format(i)
             question_data = request.form.getlist(key)
             questionId=courseRepo.insertQuestion(courseId=courseId, question=question_data[0])
 
-            answer = request.form.getlist('answers[{0}]'.format(i))
+            answer = remquest.form.getlist('answers[{0}]'.format(i))
             for j in range(1, len(question_data)):
                 isCorrect = 0
                 if int(answer[0]) == j:
