@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+<a href="/courses">Back</a>
+<br>
+
+Name: {% print(userData['username']) %}
+Email: {% print(userData['email']) %}
+
+<br>
+Courses: 
+<br>
+{% for course in courses: %}
+	Title: {% print(course['title']) %}
+	Type: {% print(course['type']) %}
+	Date: {% print(course['date_log']) %}
+	<br>
+{% endfor %}
+
+{% endblock %}

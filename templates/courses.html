@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
+<a href="/profile">Profile</a>
+
   <form class="form-login" method="POST" action="/courses">
 
     <label for="name">Course name:</label>
@@ -13,4 +15,8 @@
 
     <button id="btnCreate" type="submit">Start</button>
   </form>
+
+  <br><br><br>
+  Newest:<br>
+  <a href={%print(newUrl)%}>{% print(newTitle) %}</a>
 {% endblock %}

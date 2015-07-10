@@ -71,7 +71,16 @@ def login():
 @teachMeApp.route("/courses")
 def courses():
     if "email" in session:
-        return render_template("courses.html")
+        db = dbc()
+        newestCourseQuery = "SELECT * FROM courses ORDER BY date DESC LIMIT 1"
+        result = db.resultDict(newestCourseQuery)
+        result = result[0]
+        # pprint(result)
+        newest = ''
+        if result:
+            newest = "/takeCourse?id={0}&title={1}".format(result['course_id'], result['title'])
+        
+        return render_template("courses.html", newUrl=newest, newTitle=result['title'])
 
     return redirect(url_for('login'))
 
@@ -89,7 +98,6 @@ def startCreateCourses():
 
     if name and count and courseType:
         return redirect(url_for("openCreateCourseForm", name=name, count=count, id=id))
-        # return redirect(url_for('/createCourse?name=' + name + '&count=' + count + '&type=' + courseType))
 
     return render_template("courses.html")
 
@@ -127,14 +135,52 @@ def createCourse():
             answQuery = answQuery.format(question_id, question_data[j], isCorrect)
             db.execute(answQuery)
 
-    return render_template("courses.html")
+    return redirect(url_for("courses"))
 
 
-@teachMeApp.route("/addQuestion", methods=["POST"])
-def addQuestion():
-    data = dict(request.form)
-    # return json.dumps({'html':print(data)})
-    # id = request.args.get(id)
-    # return json.dumps({'html':id})
+@teachMeApp.route("/takeCourse", methods=['GET'])
+def openCourse():
+    db = dbc()
+    id = request.args.get("id")
+    title = request.args.get("title")
+    questionsQuery = "SELECT question_id, question FROM questions WHERE course_id={0}".format(id)
+    questions = db.resultDict(questionsQuery)
 
-    return render_template("createCouse.html")
+    result = {}
+    for arr in questions:
+        result[arr['question_id']] = {}
+        result[arr['question_id']]['question'] = arr['question']
+
+        answersQuery = "SELECT answer_id, answer, correct FROM answers WHERE question_id={0}".format(arr['question_id'])
+        answers = db.resultDict(answersQuery)
+
+        i = 1;    
+        for answer in answers:
+            result[arr['question_id']]["answer{0}".format(i)] = answer['answer']
+            result[arr['question_id']]["correct{0}".format(i)] = answer['correct']
+            i = i+1
+
+    return render_template('/loadCourse.html', courseData=result, id=id, title=title)
+
+
+@teachMeApp.route("/takeCourse", methods=['POST'])
+def finishCourse():
+    db = dbc()
+    courseId = request.args.get('id')
+    query="INSERT INTO courses_taken (user_id, course_id, date_log) VALUES({0}, {1}, NOW()) ".format(session['userId'], courseId)
+    db.execute(query)
+    # return json.dumps({'html':request.form})
+    return redirect(url_for('courses'))
+
+
+@teachMeApp.route("/profile")
+def viewProfile():
+    id=session['userId']
+    db = dbc()
+    query = "SELECT email, username FROM users WHERE user_id={0}".format(id)
+    userData = db.resultDict(query)
+
+    query = "SELECT title, type, date_log FROM courses_taken as A JOIN courses as B ON A.course_id = B.course_id WHERE user_id={0}".format(id)
+    courses = db.resultDict(query)
+    # return json.dumps({'html':courses})
+    return render_template("profile.html", userData=userData, courses=courses)
