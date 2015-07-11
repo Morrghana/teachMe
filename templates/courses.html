@@ -3,6 +3,8 @@
 <div class="col-xs-4 col-md-offset-4">
     <h4>Create a Course</h4>
     <div class="well">
+        <a href="/profile">Profile</a>
+        <br><br>
         <form id="coursesForm" method="POST" action="/courses">
             <div class="form-group">
                 <label for="name" class="control-label">Name</label>
@@ -28,7 +30,7 @@
         <hr>
 
         {% if newUrl and newTitle:%}
-            Newest:<br>
+            Newest<br>
             <a href={%print(newUrl)%}>{% print(newTitle) %}</a>
         {% endif%}
 
@@ -36,7 +38,7 @@
         <hr>
 
         <form id="searchForm" method="POST" action="/courses">
-            Search for courses:
+            <label for="searchType" class="control-label">Search for courses</label>
             <select name='searchType' class="form-control">
                 {% for type in types: %}
                     <option value={%print(type['type'])%}> {%print(type['type'])%} </option>
