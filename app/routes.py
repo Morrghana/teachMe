@@ -64,7 +64,7 @@ def courses():
         model=CourseModel()
         result=model.getNewestCourse()
         types=model.getCourseTypes()      
-        return render_template("courses.html", types=types, newUrl=result["url"], newTitle=result['title'])
+        return render_template("courses.html", types=types, newUrl=result["url"], newTitle=result['title'], searchResults={})
 
     return redirect(url_for('login'))
 
@@ -74,12 +74,12 @@ def startCreateCourses():
     model=CourseModel()
 
     if request.form['searchType'] :
-        courseType=request.form.get('search', None)
+        courseType=request.form['searchType']
         results=model.searchCourses(courseType=courseType)
-        result=model.getNewestCourse()
-        types=model.getCourseTypes()      
-        return render_template("courses.html", types=types, newUrl=result["url"], newTitle=result['title'])
 
+        result=model.getNewestCourse()
+        types=model.getCourseTypes()  
+        return render_template("courses.html", types=types, newUrl=result["url"], newTitle=result['title'], searchResults=results)
     else:
         name = request.form['name']
         count = request.form['questions']
