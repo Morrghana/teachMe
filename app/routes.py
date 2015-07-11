@@ -73,7 +73,7 @@ def courses():
 def startCreateCourses():
     model=CourseModel()
 
-    if request.form['searchType'] :
+    if request.form.get('searchType', False) :
         courseType=request.form['searchType']
         results=model.searchCourses(courseType=courseType)
 
@@ -90,7 +90,7 @@ def startCreateCourses():
         if name and count and courseType:
             return redirect(url_for("openCreateCourseForm", name=name, count=count, id=id))
 
-    return render_template("courses.html")
+    # return render_template("courses.html")
 
 
 @teachMeApp.route("/createCourse", methods=['GET'])
