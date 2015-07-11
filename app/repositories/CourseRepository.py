@@ -87,3 +87,10 @@ class CourseRepository():
         return types
 
 
+    def searchCourses(self, courseType):
+        db=dbc()
+        query="SELECT course_id, title FROM courses WHERE type='{0}'".format(courseType)
+        courses=db.resultDict(query)
+        return courses
+
+

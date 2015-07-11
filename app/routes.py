@@ -71,15 +71,18 @@ def courses():
 
 @teachMeApp.route("/courses", methods=['POST'])
 def startCreateCourses():
-    name = request.form['name']
-    count = request.form['questions']
-    courseType = request.form['type']
+    if request.form['search'] :
+        results=model.searchCourses(courseType=courseType)
+    else:
+        name = request.form['name']
+        count = request.form['questions']
+        courseType = request.form['type']
 
-    model=CourseModel()
-    id=model.addCourse(userId=session['userId'], title=name, type=courseType)
+        model=CourseModel()
+        id=model.addCourse(userId=session['userId'], title=name, type=courseType)
 
-    if name and count and courseType:
-        return redirect(url_for("openCreateCourseForm", name=name, count=count, id=id))
+        if name and count and courseType:
+            return redirect(url_for("openCreateCourseForm", name=name, count=count, id=id))
 
     return render_template("courses.html")
 
@@ -133,3 +136,12 @@ def viewProfile():
 
     return render_template("profile.html", userData=userData[0], courses=courses)
 
+
+# @teachMeApp.route("/search", methods=['POST'])
+# def searchCourses():
+#     courseType=request.form['searchType']
+#     model=CourseModel()
+#     results=model.searchCourses(courseType=courseType)
+    
+#     # return json.dumps({'html':print(results)})
+#     return render_template("courses.html", searchResults=results)

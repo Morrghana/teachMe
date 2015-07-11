@@ -83,3 +83,9 @@ class CourseModel():
         courseRepo=CourseRepository()
         types=courseRepo.getCourseTypes()
         return types
+
+
+    def searchCourses(self, courseType):
+        courseRepo=CourseRepository()
+        courses=courseRepo.searchCourses(courseType=courseType)
+        return courses
