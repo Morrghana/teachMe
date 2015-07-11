@@ -47,9 +47,12 @@
             <button type="submit" class="btn btn-success btn-block" name="search">Search</button>
         </form>
 
-        {% for result in searchResults %}
-          <a href={%print("/takeCourse?id={0}&title={1}".format(result['course_id'], result['title']))%}>{%print(result['title'])%}</a>
-        {% endfor%}
+        <br>
+        <ul>
+            {% for result in searchResults %}
+                <li><a href={%print("/takeCourse?id={0}&title={1}".format(result['course_id'], result['title']))%}>{%print(result['title'])%}</a></p>
+            {% endfor%}
+        </ul>
     </div>
 </div>
 {% endblock %}
