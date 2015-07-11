@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="col-xs-4 col-md-offset-4">
-  <h4>Sign Up</h4>
+    <h4>Sign Up</h4>
     <div class="well">
         <form id="signUpForm" method="POST" action="/signUp">
             <div class="form-group">
                 <label for="name" class="control-label">Name</label>
-                <input type="name" class="form-control" id="name" name="name" required title="Please enter your name">
+                <input type="text" class="form-control" id="name" name="name" required title="Please enter your name">
             </div>
             <div class="form-group">
                 <label for="email" class="control-label">Email</label>

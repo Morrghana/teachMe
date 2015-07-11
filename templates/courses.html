@@ -1,28 +1,35 @@
 {% extends "layout.html" %}
 {% block content %}
-<a href="/profile">Profile</a>
+<div class="col-xs-4 col-md-offset-4">
+    <h4>Create a Course</h4>
+    <div class="well">
+        <form id="coursesForm" method="POST" action="/courses">
+            <div class="form-group">
+                <label for="name" class="control-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="questions" class="control-label">Questions count</label>
+                <input type="number" class="form-control" id="questions" name="questions" required>
+            </div>
+            <div class="form-group">
+                <label for="type" class="control-label">Course type</label>
+                <select name='type' class="form-control">
+                    {% for type in types: %}
+                        <option value={%print(type['type'])%}> {%print(type['type'])%} </option>
+                    {% endfor %}
+                </select>
+            </div>
 
-  <form class="form-login" method="POST" action="/courses">
+            <button type="submit" class="btn btn-primary btn-block">Start</button>
+        </form>
 
-    <label for="name">Course name:</label>
-    <input type="text" name="name" id="name" required>
+        <br><br>
 
-    <label for="questions">Questions count:</label>
-    <input type="number" name="questions" id="questions" required>
-
-	<label for="type">Course type:</label>
-    <select name='type'>
-      {% for type in types: %}
-        <option value={%print(type['type'])%}> {%print(type['type'])%} </option>
-      {% endfor %}
-    </select>
-
-    <button id="btnCreate" type="submit">Start</button>
-  </form>
-
-  <br><br><br>
-  {% if url and newTitle:%}
-    Newest:<br>
-    <a href={%print(url)%}>{% print(newTitle) %}</a>
-  {% endif%}
-  {% endblock %}
+        {% if newUrl and newTitle:%}
+            Newest:<br>
+            <a href={%print(url)%}>{% print(newTitle) %}</a>
+        {% endif%}
+    </div>
+</div>
+{% endblock %}
