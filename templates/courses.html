@@ -24,12 +24,26 @@
             <button type="submit" class="btn btn-primary btn-block">Start</button>
         </form>
 
-        <br><br>
+        <br>
+        <hr>
 
         {% if newUrl and newTitle:%}
             Newest:<br>
             <a href={%print(url)%}>{% print(newTitle) %}</a>
         {% endif%}
+
+        <br>
+        <hr>
+
+        <form class="searchForm" method="POST" action="/course">
+            Search for courses:
+            <select name='searchType' class="form-control">
+                {% for type in types: %}
+                    <option value={%print(type['type'])%}> {%print(type['type'])%} </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-success btn-block">Search</button>
+        </form>
     </div>
 </div>
 {% endblock %}
