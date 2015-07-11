@@ -10,7 +10,7 @@ from app.models.CourseModel import CourseModel
 
 @teachMeApp.route("/")
 def main():
-    return render_template("home.html")
+    return render_template("login.html")
 
 
 @teachMeApp.route("/signUp")
