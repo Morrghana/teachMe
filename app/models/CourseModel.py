@@ -62,6 +62,12 @@ class CourseModel():
         return result 
 
 
+    def getDescription(self, courseId):
+        courseRepo=CourseRepository()
+        descr=courseRepo.getDescription(courseId=courseId)
+        return descr        
+
+
     def finishCourse(self, userId, courseId):
         courseRepo=CourseRepository()
         courseRepo.courseTaken(userId, courseId)

@@ -2,6 +2,7 @@
 {% block content %}
 <div class="col-xs-10 col-md-offset-1">
     <h4>{% print(request.args.get('title')) %}</h4>
+    <p>{%print(description['description'])%}</p>
     <div class="well">
         <form method="POST" action=/takeCourse?id={%print(id)%}&title={%print(title)%}>
             {% for key, arr in courseData.items(): %}

@@ -94,3 +94,9 @@ class CourseRepository():
         return courses
 
 
+    def getDescription(self, courseId):
+        db=dbc()
+        query="SELECT description FROM courses WHERE course_id={0}".format(courseId)
+        descr=db.resultDict(query)
+        return descr
+

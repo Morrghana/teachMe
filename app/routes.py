@@ -119,8 +119,9 @@ def openCourse():
     title = request.args.get("title")
     model=CourseModel()
     result=model.getCourse(courseId=id)
+    descr = model.getDescription(courseId=id)
 
-    return render_template('/loadCourse.html', courseData=result, id=id, title=title)
+    return render_template('/loadCourse.html', courseData=result, id=id, title=title, description=descr[0])
 
 
 @teachMeApp.route("/takeCourse", methods=['POST'])
