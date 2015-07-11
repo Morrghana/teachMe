@@ -7,6 +7,7 @@ from app.lib.dbc import dbc
 from app.models.UserModel import UserModel
 from app.models.CourseModel import CourseModel
 
+
 @teachMeApp.route("/")
 def main():
     return render_template("home.html")
@@ -24,15 +25,16 @@ def signUp():
     password = request.form['password']
 
     if name and email and password:
-        model=UserModel()
+        model = UserModel()
         hasUser = model.checkUser(name=name, email=email)
-        
+
         if hasUser:
             model.createUser(name=name, email=email, password=password)
             session['email'] = email
             return redirect(url_for("courses"))
     else:
         return render_template("signup.html")
+
 
 @teachMeApp.route("/login")
 def showLogin():
@@ -43,10 +45,10 @@ def showLogin():
 def login():
     email = request.form['email']
     password = request.form['password']
-    model=UserModel()
+    model = UserModel()
 
     if email and password:
-        result=model.checkAndGetUserInfo(email=email, password=password)
+        result = model.checkAndGetUserInfo(email=email, password=password)
 
         if result:
             session['userId'] = result['user_id']
@@ -61,9 +63,9 @@ def login():
 @teachMeApp.route("/courses")
 def courses():
     if "email" in session:
-        model=CourseModel()
-        result=model.getNewestCourse()
-        types=model.getCourseTypes()      
+        model = CourseModel()
+        result = model.getNewestCourse()
+        types = model.getCourseTypes()
         return render_template("courses.html", types=types, newUrl=result["url"], newTitle=result['title'], searchResults={})
 
     return redirect(url_for('login'))
@@ -71,21 +73,21 @@ def courses():
 
 @teachMeApp.route("/courses", methods=['POST'])
 def startCreateCourses():
-    model=CourseModel()
+    model = CourseModel()
 
-    if request.form.get('searchType', False) :
-        courseType=request.form['searchType']
-        results=model.searchCourses(courseType=courseType)
+    if request.form.get('searchType', False):
+        courseType = request.form['searchType']
+        results = model.searchCourses(courseType=courseType)
 
-        result=model.getNewestCourse()
-        types=model.getCourseTypes()  
+        result = model.getNewestCourse()
+        types = model.getCourseTypes()
         return render_template("courses.html", types=types, newUrl=result["url"], newTitle=result['title'], searchResults=results)
     else:
         name = request.form['name']
         count = request.form['questions']
         courseType = request.form['type']
 
-        id=model.addCourse(userId=session['userId'], title=name, type=courseType)
+        id = model.addCourse(userId=session['userId'], title=name, type=courseType)
 
         if name and count and courseType:
             return redirect(url_for("openCreateCourseForm", name=name, count=count, id=id))
@@ -107,7 +109,7 @@ def createCourse():
     course_id = int(request.args.get('courseId'))
     count = int(request.args.get('count'))
 
-    model=CourseModel()
+    model = CourseModel()
     model.createCourse(courseId=course_id, count=count)
 
     return redirect(url_for("courses"))
@@ -117,8 +119,8 @@ def createCourse():
 def openCourse():
     id = request.args.get("id")
     title = request.args.get("title")
-    model=CourseModel()
-    result=model.getCourse(courseId=id)
+    model = CourseModel()
+    result = model.getCourse(courseId=id)
     descr = model.getDescription(courseId=id)
 
     return render_template('/loadCourse.html', courseData=result, id=id, title=title, description=descr[0])
@@ -126,7 +128,7 @@ def openCourse():
 
 @teachMeApp.route("/takeCourse", methods=['POST'])
 def finishCourse():
-    model=CourseModel()
+    model = CourseModel()
     courseId = request.args.get('id')
     model.finishCourse(session['userId'], courseId)
 
@@ -135,20 +137,10 @@ def finishCourse():
 
 @teachMeApp.route("/profile")
 def viewProfile():
-    id=session['userId']
-    model=CourseModel()
+    id = session['userId']
+    model = CourseModel()
 
-    userData=model.getUserData(userId=id)
-    courses=model.getUserCourses(userId=id)
+    userData = model.getUserData(userId=id)
+    courses = model.getUserCourses(userId=id)
 
     return render_template("profile.html", userData=userData[0], courses=courses)
-
-
-# @teachMeApp.route("/search", methods=['POST'])
-# def searchCourses():
-#     courseType=request.form['searchType']
-#     model=CourseModel()
-#     results=model.searchCourses(courseType=courseType)
-    
-#     # return json.dumps({'html':print(results)})
-#     return render_template("courses.html", searchResults=results)

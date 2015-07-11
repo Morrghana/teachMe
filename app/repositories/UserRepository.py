@@ -1,10 +1,10 @@
 from app.lib.dbc import dbc
 
+
 class UserRepository():
-    
+
     def __init__(self):
         pass
-
 
     def checkUser(self, name, email):
         db = dbc()
@@ -14,12 +14,10 @@ class UserRepository():
         usersCount = len(result)
         return usersCount
 
-
     def createUser(self, name, email, password):
         db = dbc()
         query = "INSERT INTO users (username, email, password) VALUES('{0}', '{1}', '{2}')".format(name, email, password)
         db.execute(query)
-
 
     def getUserInfo(self, email, password):
         db = dbc()
