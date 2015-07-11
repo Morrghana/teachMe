@@ -71,14 +71,20 @@ def courses():
 
 @teachMeApp.route("/courses", methods=['POST'])
 def startCreateCourses():
-    if request.form['search'] :
+    model=CourseModel()
+
+    if request.form['searchType'] :
+        courseType=request.form.get('search', None)
         results=model.searchCourses(courseType=courseType)
+        result=model.getNewestCourse()
+        types=model.getCourseTypes()      
+        return render_template("courses.html", types=types, newUrl=result["url"], newTitle=result['title'])
+
     else:
         name = request.form['name']
         count = request.form['questions']
         courseType = request.form['type']
 
-        model=CourseModel()
         id=model.addCourse(userId=session['userId'], title=name, type=courseType)
 
         if name and count and courseType:

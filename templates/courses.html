@@ -29,20 +29,20 @@
 
         {% if newUrl and newTitle:%}
             Newest:<br>
-            <a href={%print(url)%}>{% print(newTitle) %}</a>
+            <a href={%print(newUrl)%}>{% print(newTitle) %}</a>
         {% endif%}
 
         <br>
         <hr>
 
-        <form class="searchForm" method="POST" action="/course">
+        <form id="searchForm" method="POST" action="/courses">
             Search for courses:
             <select name='searchType' class="form-control">
                 {% for type in types: %}
                     <option value={%print(type['type'])%}> {%print(type['type'])%} </option>
                 {% endfor %}
             </select>
-            <button type="submit" class="btn btn-success btn-block">Search</button>
+            <button type="submit" class="btn btn-success btn-block" name="search">Search</button>
         </form>
     </div>
 </div>
